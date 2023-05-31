@@ -1,0 +1,53 @@
+header {
+  display: flex;
+  background-color: #562b81;
+  color: white;
+  font-family: sans-serif;
+  font-size: 20px;
+  align-items: center;
+}
+
+form {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+h1 {
+  font-family: sans-serif;
+}
+
+.url-pic {
+  height: 200px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+input#title {
+  margin-bottom: 20px;
+}
+
+#photo-url {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#notes {
+  height: 200px;
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#save-button {
+  background-color: #562b81;
+  color: white;
+  width: 70px;
+  height: 30px;
+  font-family: sans-serif;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#header-p {
+  margin-left: 20px;
+}
