@@ -61,3 +61,16 @@ button {
   border-color: #562b81;
   letter-spacing: 1px;
 }
+
+li {
+  list-style-type: none;
+}
+
+p {
+  font-family: sans-serif;
+  margin-bottom: 35px;
+}
+
+h2 {
+  font-family: sans-serif;
+}
