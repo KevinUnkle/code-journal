@@ -10,6 +10,7 @@ const $titleForm = document.querySelector('#title');
 const $photoForm = document.querySelector('#photo-url');
 const $notesForm = document.querySelector('#notes');
 const $form = document.querySelector('#form');
+const $ul = document.querySelector('ul');
 
 $form.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -21,42 +22,49 @@ $form.addEventListener('submit', function (event) {
   data.nextEntryId++;
   data.entries.unshift(newObject);
   $imgSrc.setAttribute('src', 'images/placeholder-image-square.jpg');
+  viewSwap(data.entries);
   $form.reset();
-  const $ul = document.querySelector('ul');
   $ul.prepend(renderEntry(newObject));
 });
 
 function renderEntry(entry) {
-  const newLi = document.createElement('li');
-  const newDiv = document.createElement('div');
-  const newImg = document.createElement('img');
-  const newH2 = document.createElement('h2');
-  const newP = document.createElement('p');
-  newDiv.className = 'container';
-  newImg.setAttribute('src', entry.photoURL);
-  newLi.append(newDiv);
-  newDiv.append(newImg);
-  newImg.after(newH2);
-  newH2.after(newP);
-  newH2.textContent = entry.title;
-  newP.textContent = entry.notes;
+  const $newLi = document.createElement('li');
+  const $newRowDiv = document.createElement('div');
+  const $firstColumnHalf = document.createElement('div');
+  const $imageDiv = document.createElement('div');
+  const $secondColumnHalf = document.createElement('div');
+  const $newImg = document.createElement('img');
+  const $newH2 = document.createElement('h2');
+  const $newP = document.createElement('p');
+  $newRowDiv.className = 'row';
+  $firstColumnHalf.className = 'column-half';
+  $secondColumnHalf.className = 'column-half';
+  $newImg.setAttribute('src', entry.photoURL);
+  $newImg.alt = 'web photo';
+  $newLi.append($newRowDiv);
+  $newRowDiv.append($firstColumnHalf);
+  $firstColumnHalf.appendChild($imageDiv);
+  $imageDiv.appendChild($newImg);
+  $firstColumnHalf.after($secondColumnHalf);
+  $secondColumnHalf.appendChild($newH2);
+  $secondColumnHalf.appendChild($newP);
+  $newH2.textContent = entry.title;
+  $newP.textContent = entry.notes;
   toggleNoEntries();
-  return newLi;
+  return $newLi;
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
   for (let i = 0; i < data.entries.length; i++) {
     const dataEntry = data.entries[i];
     const entryDom = renderEntry(dataEntry);
-    const $ul = document.querySelector('ul');
     $ul.append(entryDom);
     viewSwap(data.view);
     toggleNoEntries();
   }
 });
-
+const $div = document.querySelector('#hidden');
 function toggleNoEntries() {
-  const $div = document.querySelector('#hidden');
   const dataEntries = data.entries;
   if (dataEntries.length === 0) {
     $div.className = '';
@@ -65,9 +73,10 @@ function toggleNoEntries() {
   }
 }
 
+const $entryForm = document.querySelector('#data-view');
+const $entries = document.querySelector('#entries');
+
 function viewSwap(view) {
-  const $entryForm = document.querySelector('#data-view');
-  const $entries = document.querySelector('#entries');
   data.view = view;
   if (view === 'entry-form') {
     $entryForm.className = '';

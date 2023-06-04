@@ -86,8 +86,10 @@ h2 {
   font-family: sans-serif;
 }
 
-.row {
+.row-edit {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .column-solo-half {
