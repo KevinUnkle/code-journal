@@ -22,7 +22,8 @@ $form.addEventListener('submit', function (event) {
   data.entries.unshift(newObject);
   $imgSrc.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
-  renderEntry();
+  const $ul = document.querySelector('ul');
+  $ul.prepend(renderEntry(newObject));
 });
 
 function renderEntry(entry) {
@@ -39,6 +40,7 @@ function renderEntry(entry) {
   newH2.after(newP);
   newH2.textContent = entry.title;
   newP.textContent = entry.notes;
+  toggleNoEntries();
   return newLi;
 }
 
@@ -48,18 +50,20 @@ document.addEventListener('DOMContentLoaded', function (event) {
     const entryDom = renderEntry(dataEntry);
     const $ul = document.querySelector('ul');
     $ul.append(entryDom);
+    viewSwap(data.view);
+    toggleNoEntries();
   }
 });
 
-// function toggleNoEntries() {
-//   const $div = document.querySelector('#hidden');
-//   const dataEntries = data.entries;
-//   if (dataEntries.length === 0) {
-//     $div.className = '';
-//   } else {
-//     $div.className = 'hidden';
-//   }
-// }
+function toggleNoEntries() {
+  const $div = document.querySelector('#hidden');
+  const dataEntries = data.entries;
+  if (dataEntries.length === 0) {
+    $div.className = '';
+  } else {
+    $div.className = 'hidden';
+  }
+}
 
 function viewSwap(view) {
   const $entryForm = document.querySelector('#data-view');
@@ -73,8 +77,12 @@ function viewSwap(view) {
     $entryForm.className = 'hidden';
   }
 }
-const $entriesLink = document.querySelector('#entriesLink');
+const $entriesLink = document.querySelector('#entries-link');
 $entriesLink.addEventListener('click', function (event) {
   viewSwap('entries');
+});
 
+const $newButton = document.querySelector('#new-button');
+$newButton.addEventListener('click', function (event) {
+  viewSwap('entry-form');
 });

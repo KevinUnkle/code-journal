@@ -21,7 +21,7 @@
     <div class="container">
       <nav class="navbar-column-full">
         <span>Code Journal</span>
-        <a id="entriesLink">Entries</a>
+        <a id="entries-link">Entries</a>
       </nav>
     </div>
   </header>
@@ -51,13 +51,15 @@
         </div>
       </form>
     </div>
-    <div id="entries" data-view="entries">
-      <div class="container">
-        <h1>Entries</h1>
-        <a id="newButton">NEW</a>
+    <div id="entries" class="hidden" data-view="entries">
+      <div class="row">
+        <div class="column-solo-half">
+          <h1>Entries</h1>
+          <a id="new-button">NEW</a>
+        </div>
       </div>
       <div id="hidden">
-        <p>No entries have been recorded.</p>
+        <p class="no-entry-text">No entries have been recorded.</p>
       </div>
       <ul>
       </ul>
