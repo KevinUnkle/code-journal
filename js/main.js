@@ -22,7 +22,7 @@ $form.addEventListener('submit', function (event) {
   data.nextEntryId++;
   data.entries.unshift(newObject);
   $imgSrc.setAttribute('src', 'images/placeholder-image-square.jpg');
-  viewSwap(data.entries);
+  viewSwap('entries');
   $form.reset();
   $ul.prepend(renderEntry(newObject));
 });
