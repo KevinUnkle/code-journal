@@ -36,6 +36,8 @@ function renderEntry(entry) {
   const $newImg = document.createElement('img');
   const $newH2 = document.createElement('h2');
   const $newP = document.createElement('p');
+  const $fontAwesomeDiv = document.createElement('div');
+  const $i = document.createElement('i');
   $newRowDiv.className = 'row';
   $firstColumnHalf.className = 'column-half';
   $secondColumnHalf.className = 'column-half';
@@ -46,13 +48,32 @@ function renderEntry(entry) {
   $firstColumnHalf.appendChild($imageDiv);
   $imageDiv.appendChild($newImg);
   $firstColumnHalf.after($secondColumnHalf);
-  $secondColumnHalf.appendChild($newH2);
+  $secondColumnHalf.append($fontAwesomeDiv);
+  $fontAwesomeDiv.appendChild($newH2);
+  $fontAwesomeDiv.appendChild($i);
+  $i.className = 'fa fa-pencil';
+  $i.setAttribute('data-entry-id', entry.entryId);
+  $fontAwesomeDiv.className = 'row';
+  $fontAwesomeDiv.className = 'row fontawesome';
   $secondColumnHalf.appendChild($newP);
   $newH2.textContent = entry.title;
   $newP.textContent = entry.notes;
   toggleNoEntries();
   return $newLi;
 }
+
+$ul.addEventListener('click', function (event) {
+  viewSwap('entry-form');
+  const $dataEntryId = event.target.getAttribute('data-entry-id');
+  for (let i = 0; i < data.entries.length; i++) {
+    const $dataEntries = data.entries[i];
+    if ($dataEntries.entryId === $dataEntryId) {
+      data.editing = $dataEntries;
+      // left off here lol
+    }
+  }
+
+});
 
 document.addEventListener('DOMContentLoaded', function (event) {
   for (let i = 0; i < data.entries.length; i++) {
