@@ -15,17 +15,17 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
   <header>
     <div class="container">
       <nav class="navbar-column-full">
         <span>Code Journal</span>
+        <a id="entries-link">Entries</a>
       </nav>
     </div>
   </header>
   <main class="container">
-    <div data-view="entry-form">
+    <div id="data-view" data-view="entry-form">
       <form id="form">
         <div class="row">
           <div class="column-full">
@@ -50,7 +50,19 @@
         </div>
       </form>
     </div>
-    <div data-view="entries" class="hidden"></div>
+    <div id="entries" class="hidden" data-view="entries">
+      <div class="row">
+        <div class="row-edit">
+          <h1>Entries</h1>
+          <a id="new-button">NEW</a>
+        </div>
+      </div>
+      <div id="hidden">
+        <p class="no-entry-text">No entries have been recorded.</p>
+      </div>
+      <ul>
+      </ul>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
