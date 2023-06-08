@@ -13,31 +13,39 @@ const $form = document.querySelector('#form');
 const $ul = document.querySelector('ul');
 
 $form.addEventListener('submit', function (event) {
-  const newObject = {};
   event.preventDefault();
+  const newObject = {};
   newObject.title = $titleForm.value;
   newObject.photoURL = $photoForm.value;
   newObject.notes = $notesForm.value;
-  newObject.entryId = data.nextEntryId;
-  if (data.editing !== null) { // editing = !==null
-    newObject.entryId = data.editing;
-    newObject.title = data.editing.title;
-    newObject.photoURL = data.editing.photoURL;
-    newObject.notes = data.editing.notes;
+  if (data.editing === null) {
     newObject.entryId = data.nextEntryId;
-    renderEntry(newObject);
-    const $li = document.querySelector('li');
-    $li.replaceWith(newObject);
-    $h1.textContent = 'New Entry';
-    data.editing = null;
-  } else { // adding new entry, nerd.
     data.nextEntryId++;
     data.entries.unshift(newObject);
     $imgSrc.setAttribute('src', 'images/placeholder-image-square.jpg');
-    viewSwap('entries');
-    $form.reset();
     $ul.prepend(renderEntry(newObject));
+    toggleNoEntries();
+  } else {
+    newObject.entryId = data.editing.entryId;
+    const $liAll = document.querySelectorAll('li');
+    const $newRenderObject = renderEntry(newObject);
+    for (let i = 0; i < $liAll.length; i++) {
+      const $liGetAttribute = $liAll[i].getAttribute('data-entry-id');
+      if (+$liGetAttribute === (+data.editing.entryId)) {
+        $liAll[i].replaceWith($newRenderObject);
+      }
+    }
+    for (let i = 0; i < data.entries.length; i++) {
+      const dataEntriesIndex = data.entries[i];
+      if (dataEntriesIndex.entryId === (+data.editing.entryId)) {
+        data.entries[i] = newObject;
+      }
+    }
+    $h1.textContent = 'New Entry';
+    data.editing = null;
   }
+  viewSwap('entries');
+  $form.reset();
 });
 
 function renderEntry(entry) {
@@ -58,17 +66,17 @@ function renderEntry(entry) {
   $newImg.alt = 'web photo';
   $newLi.append($newRowDiv);
   $newRowDiv.append($firstColumnHalf);
-  $i.className = 'fa fa-pencil fa-2x';
-  $i.setAttribute('data-entry-id', entry.entryId);
   $firstColumnHalf.appendChild($imageDiv);
   $imageDiv.appendChild($newImg);
   $firstColumnHalf.after($secondColumnHalf);
   $secondColumnHalf.append($fontAwesomeDiv);
   $fontAwesomeDiv.appendChild($newH2);
   $fontAwesomeDiv.appendChild($i);
+  $secondColumnHalf.appendChild($newP);
   $fontAwesomeDiv.className = 'row';
   $fontAwesomeDiv.className = 'row fontawesome';
-  $secondColumnHalf.appendChild($newP);
+  $i.className = 'fa fa-pencil fa-2x';
+  $i.setAttribute('data-entry-id', entry.entryId);
   $newH2.textContent = entry.title;
   $newP.textContent = entry.notes;
   $newLi.setAttribute('data-entry-id', entry.entryId);
@@ -98,11 +106,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
     const dataEntry = data.entries[i];
     const entryDom = renderEntry(dataEntry);
     $ul.append(entryDom);
-    viewSwap(data.view);
-    toggleNoEntries();
   }
+  viewSwap(data.view);
+  toggleNoEntries();
 });
 const $div = document.querySelector('#hidden');
+
 function toggleNoEntries() {
   const dataEntries = data.entries;
   if (dataEntries.length === 0) {
