@@ -24,7 +24,6 @@ $form.addEventListener('submit', function (event) {
     data.entries.unshift(newObject);
     $imgSrc.setAttribute('src', 'images/placeholder-image-square.jpg');
     $ul.prepend(renderEntry(newObject));
-    toggleNoEntries();
   } else {
     newObject.entryId = data.editing.entryId;
     const $liAll = document.querySelectorAll('li');
@@ -85,6 +84,7 @@ function renderEntry(entry) {
 }
 
 const $h1 = document.querySelector('h1');
+const $deleteButton = document.querySelector('#delete');
 
 $ul.addEventListener('click', function (event) {
   viewSwap('entry-form');
@@ -99,6 +99,48 @@ $ul.addEventListener('click', function (event) {
       $h1.textContent = 'Edit Entry';
     }
   }
+  if (data.editing !== null) {
+    $deleteButton.className = 'delete';
+  } else {
+    $deleteButton.className = 'hidden';
+  }
+});
+
+const $modal = document.querySelector('#modal');
+const $overlay = document.querySelector('#overlay');
+
+$deleteButton.addEventListener('click', function (event) {
+  viewSwap('#modal');
+  $modal.className = 'modal';
+  $overlay.className = 'overlay';
+});
+
+const $cancel = document.querySelector('#cancel');
+const $confirm = document.querySelector('#confirm');
+
+$cancel.addEventListener('click', function (event) {
+  $modal.className = 'hidden';
+  $overlay.className = 'hidden';
+});
+
+$confirm.addEventListener('click', function (event) {
+  const $li = document.querySelectorAll('li');
+  for (let i = 0; i < data.entries.length; i++) {
+    const $dataEntriesI = data.entries[i];
+    if ($dataEntriesI === data.editing) {
+      data.entries.splice(i, 1);
+      for (let i = 0; i < $li.length; i++) {
+        const $liGetAttribute = $li[i].getAttribute('data-entry-id');
+        if (+$liGetAttribute === (+data.editing.entryId)) {
+          $li[i].remove();
+        }
+      }
+      toggleNoEntries();
+      $modal.className = 'hidden';
+      $overlay.className = 'hidden';
+      viewSwap('entries');
+    }
+  }
 });
 
 document.addEventListener('DOMContentLoaded', function (event) {
@@ -107,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     const entryDom = renderEntry(dataEntry);
     $ul.append(entryDom);
   }
-  viewSwap(data.view);
+  viewSwap('entry-form');
   toggleNoEntries();
 });
 const $div = document.querySelector('#hidden');

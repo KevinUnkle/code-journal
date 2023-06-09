@@ -28,6 +28,10 @@
     padding: 0 0.75rem;
   }
 
+  #modal {
+    max-width: 900px;
+  }
+
   .column-half {
     width: 50%;
   }

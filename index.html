@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <header>
     <div class="container">
@@ -45,7 +46,10 @@
           <div class="column-full">
             <label for="notes">Notes</label>
             <textarea id="notes" name="notesbox"></textarea>
-            <button type="submit">SAVE</button>
+            <div class="buttonrow">
+              <button type="button" id="delete" class="delete hidden">Delete Entry</button>
+              <button type="submit" class="save">SAVE</button>
+            </div>
           </div>
         </div>
       </form>
@@ -54,11 +58,21 @@
       <div class="row">
         <div class="row-edit">
           <h1>Entries</h1>
-          <button type="button" id="new-button">NEW</button>;
+          <button type="button" id="new-button">NEW</button>
         </div>
       </div>
       <div id="hidden">
         <p class="no-entry-text">No entries have been recorded.</p>
+      </div>
+      <div class="row">
+        <div id="overlay" class="hidden"></div>
+        <div id="modal" class="hidden">
+          <p>Are you sure you want to delete this entry?</p>
+          <div id="lowermodal" class="">
+            <button type="button" id="cancel">CANCEL</button>
+            <button type="button" id="confirm">CONFIRM</button>
+          </div>
+        </div>
       </div>
       <ul>
       </ul>
